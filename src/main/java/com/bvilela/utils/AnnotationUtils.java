@@ -1,23 +1,22 @@
-package com.bruno.utils;
+package com.bvilela.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
 
-import com.bruno.utils.annotation.ValidParseDate;
+import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public final class AnnotationUtils {
 
 	private AnnotationUtils() {
 	}
 
-	public static <T> void dtoParseDates(T dto) throws Exception {
+	public static <T> void parseDatesDto(T dto) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
 		String setMethodNameConverted = null;
-		if (Objects.isNull(dto)) {
-			return;
-		}
 
 		for (Field field : dto.getClass().getDeclaredFields()) {
 			ValidParseDate annotation = field.getDeclaredAnnotation(ValidParseDate.class);
@@ -37,5 +36,5 @@ public final class AnnotationUtils {
 			}
 		}
 	}
-
+	
 }
