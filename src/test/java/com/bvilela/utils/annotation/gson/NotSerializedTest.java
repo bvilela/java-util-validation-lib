@@ -24,7 +24,7 @@ class NotSerializedTest {
 	}
 	
 	@Test
-	void shouldJsonFieldNotSerialized() {
+	void testJsonFieldNotSerialized() {
 		var dto = new myDTO1();
 		dto.setName("nameValue");
 		dto.setNickName("nickNameValue");
@@ -46,7 +46,7 @@ class NotSerializedTest {
 	}
 	
 	@Test
-	void shouldJsonAllFieldsSerialized() {
+	void testJsonAllFieldsSerialized() {
 		var dto = new myDTO2();
 		dto.setName("nameValue");
 		dto.setNickName("nickNameValue");

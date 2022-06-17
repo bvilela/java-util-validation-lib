@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class GsonUtilsTest {
 
 	@Test
-	void shouldGetGson() {
+	void testGetGson() {
 		assertNotNull(GsonUtils.getGson());
 	}
 	
