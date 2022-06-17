@@ -2,10 +2,11 @@ name: SonarCloud
 on:
   push:
     branches:
-      - '!master' # excludes master
+      - '**'        # matches every branch
+      - '!master'   # excludes master
     paths-ignore:
       - '**/README.md'
-      - '.github/workflows/**'
+#      - '.github/workflows/**'
 
 jobs:
   sonarcloud:
