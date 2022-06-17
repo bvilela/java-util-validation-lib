@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-class ValidDateTest {
+class TestValidDate {
 
 	@AllArgsConstructor
 	private class MyTestDTO1 {
