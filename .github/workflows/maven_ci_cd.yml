@@ -6,9 +6,7 @@ name: build
 on:
   push:
     branches:
-      - '**'        # matches every branch
-#      - '!master'   # excludes master
-#      - master      # only master
+      - master
   pull_request:
     branches:
       - master
