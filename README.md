@@ -1,12 +1,12 @@
 # Java Util Validation Lib
 
-### Quality Status
+### :dart: Quality Status
 [![build](https://github.com/bvilela/java-util-validation-lib/actions/workflows/maven_ci_cd.yml/badge.svg?branch=master)](https://github.com/bvilela/java-util-validation-lib/actions/workflows/maven_ci_cd.yml)
 [![publish](https://github.com/bvilela/java-util-validation-lib/actions/workflows/maven_ci_cd_publish.yml/badge.svg)](https://github.com/bvilela/java-util-validation-lib/actions/workflows/maven_ci_cd_publish.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bvilela_java-util-validation-lib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bvilela_java-util-validation-lib)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bvilela_java-util-validation-lib&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bvilela_java-util-validation-lib)
 
-### Repository Statistics
+### :bar_chart: Repository Statistics
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=bvilela_java-util-validation-lib&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=bvilela_java-util-validation-lib)
 ![GitHub repo size](https://img.shields.io/github/repo-size/bvilela/java-util-validation-lib)
 ![GitHub language count](https://img.shields.io/github/languages/count/bvilela/java-util-validation-lib)
@@ -15,11 +15,11 @@
 <!--![GitHub forks](https://img.shields.io/github/forks/bvilela/java-util-validation-lib)-->
 
 
-## Summary
+## :mag_right: Summary
 Project with validations utils for Java based in javax and Gson.
 
 
-## Technologies
+## :computer: Technologies
 * Maven
 * Java 11
 * [Lombok](https://projectlombok.org/)
@@ -27,9 +27,9 @@ Project with validations utils for Java based in javax and Gson.
 * Static Code Analysis: [SonarCloud](https://sonarcloud.io/)
 
 
-## GitHub Actions
-* Build and Test Java with Maven (branch master)
-* Analyze SonarCloud (branch master)
+## :rocket: GitHub Actions
+* Unit Tests and Analyze SonarCloud
+* Build and run Unit Tests with Maven (branch master)
 * Publish on GitHub Packages (tag/release)
 
 
@@ -82,7 +82,7 @@ Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT
 
 :exclamation: Otherwise you will get a Not authorized exception.
 
-## How to Use
+## :grey_question: How to Use
 
 ### Case 1
 
