@@ -33,7 +33,7 @@ Project with validations utils for Java based in javax and Gson.
 * Publish on GitHub Packages (tag/release)
 
 
-## 🛠 Add dependency
+## :gear: Add dependency in your project
 To include this dependency in you project, you have to do three things.
 
 1. Add as dependency in your `pom.xml`:
@@ -82,6 +82,25 @@ Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT
 >
 > :exclamation: Otherwise you will get a Not authorized exception.
 
+
+## :hammer_and_wrench: Lib Features
+
+### Annotation @ValidParseDate.
+
+:exclamation: Can use **only in String fields**.
+
+Annotation params:
+- **message**: Error message. Default: `Value is a invalid date`.
+- **pattern**: Pattern to valid/parse String Date. Default: `dd/MM/yyyy`.
+- **locale**: Locale of Date input. Default: `pt_BR`.
+- **parse**: Indicates whether the field will be converted to LocalDate. Default: `False`.
+
+### Annotation @NotSerialized.
+
+ The annotated element will **not be serialized** to gson.toJson(dto).
+ 
+ :exclamation: You need to get the Gson() by the `com.bvilela.utils.GsonUtils.getGson()`.
+
 ## :question: How to Use
 
 ### Case 1
@@ -94,10 +113,35 @@ For this, use the **`@ValidParseDate`** annotation, with the `parse` parameter a
 import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public class MyExampleDTO {
-	
 	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy")
 	private String dateInit;
-	
+}
+```
+
+```java
+import com.bvilela.utils.annotation.javax.ValidParseDate;
+
+public class MyExampleDTO {
+	@ValidParseDate(parse = false, pattern = "dd MMMM yyyy", locale = "en")
+	private String date; //example: 01 January 2022 (month name in English)
+}
+```
+
+```java
+import com.bvilela.utils.annotation.javax.ValidParseDate;
+
+public class MyExampleDTO {
+	@ValidParseDate(pattern = "yyyy dd MMMM", locale = "de_DE")
+	private String date; //example: 2022 15 Oktober (month name in German)
+}
+```
+
+```java
+import com.bvilela.utils.annotation.javax.ValidParseDate;
+
+public class MyExampleDTO {
+	@ValidParseDate(pattern = "dd MMMM yyyy")
+	private String date; //example: 01 janeiro 2022 (name month in Portuguese)
 }
 ```
 
@@ -113,12 +157,10 @@ In this case, you need to create a `LocalDate` variable with the same name of St
 import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public class MyExampleDTO {
-	
 	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy", parse = true)
 	private String dateInit;
 	
 	private LocalDate dateInitConverted;
-	
 }
 ```
 
