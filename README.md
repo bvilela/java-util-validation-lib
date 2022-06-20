@@ -82,7 +82,7 @@ Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT
 >
 > :exclamation: Otherwise you will get a Not authorized exception.
 
-## :grey_question: How to Use
+## :question: How to Use
 
 ### Case 1
 
