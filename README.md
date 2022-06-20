@@ -33,6 +33,25 @@ Project with validations utils for Java based in javax and Gson.
 * Publish on GitHub Packages (tag/release)
 
 
+## :hammer_and_wrench: Lib Features
+
+### Annotation @ValidParseDate.
+
+> :exclamation: Can use **only in String fields**.
+> 
+> Annotation params:
+> - **message**: Error message. Default: `Value is a invalid date`.
+> - **pattern**: Pattern to valid/parse String Date. Default: `dd/MM/yyyy`.
+> - **locale**: Locale of Date input. Default: `pt_BR`.
+> - **parse**: Indicates whether the field will be converted to LocalDate. Default: `False`.
+
+### Annotation @NotSerialized.
+
+> The annotated element will **not be serialized** to gson.toJson(dto).
+> 
+> :exclamation: You need to get the Gson() by the `com.bvilela.utils.GsonUtils.getGson()`.
+
+
 ## :gear: Add dependency in your project
 To include this dependency in you project, you have to do three things.
 
@@ -82,24 +101,6 @@ Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT
 >
 > :exclamation: Otherwise you will get a Not authorized exception.
 
-
-## :hammer_and_wrench: Lib Features
-
-### Annotation @ValidParseDate.
-
-:exclamation: Can use **only in String fields**.
-
-Annotation params:
-- **message**: Error message. Default: `Value is a invalid date`.
-- **pattern**: Pattern to valid/parse String Date. Default: `dd/MM/yyyy`.
-- **locale**: Locale of Date input. Default: `pt_BR`.
-- **parse**: Indicates whether the field will be converted to LocalDate. Default: `False`.
-
-### Annotation @NotSerialized.
-
- The annotated element will **not be serialized** to gson.toJson(dto).
- 
- :exclamation: You need to get the Gson() by the `com.bvilela.utils.GsonUtils.getGson()`.
 
 ## :question: How to Use
 
