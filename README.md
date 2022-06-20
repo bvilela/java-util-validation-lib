@@ -76,11 +76,11 @@ Replace the `YOUR_USERNAME` with your GitHub login name.
 
 Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT):
 
-> *GitHub > Settings > Developer Settings > Personal access tokens > Generate new token*:
+> *GitHub > Settings > Developer Settings > Personal access tokens > Generate new token*. 
+> 
+> The token needs at least the **`read:packages`** scope.
 >
-> The token needs at least the `read:packages` scope.
-
-:exclamation: Otherwise you will get a Not authorized exception.
+> :exclamation: Otherwise you will get a Not authorized exception.
 
 ## :grey_question: How to Use
 
