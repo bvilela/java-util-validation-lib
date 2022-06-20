@@ -124,7 +124,7 @@ import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(parse = false, pattern = "dd MMMM yyyy", locale = "en")
-	private String date; //example: 01 January 2022 (month name in English)
+	private String date; // example: 01 January 2022 (month name in English)
 }
 ```
 
@@ -133,7 +133,7 @@ import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(pattern = "yyyy dd MMMM", locale = "de_DE")
-	private String date; //example: 2022 15 Oktober (month name in German)
+	private String date; // example: 2022 15 Oktober (month name in German)
 }
 ```
 
@@ -142,7 +142,7 @@ import com.bvilela.utils.annotation.javax.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(pattern = "dd MMMM yyyy")
-	private String date; //example: 01 janeiro 2022 (name month in Portuguese)
+	private String date; // example: 01 janeiro 2022 (name month in Portuguese)
 }
 ```
 
@@ -163,6 +163,30 @@ public class MyExampleDTO {
 	
 	private LocalDate dateInitConverted;
 }
+```
+
+### Case 3
+Use @NotSerialized annotation.
+
+```java
+import com.bvilela.utils.annotation.gson.NotSerialized;
+
+public class MyExampleDTO {
+	private String name;
+	
+	@NotSerialized
+	private String nickName;
+	
+	@NotSerialized
+	private int age;
+}
+```
+
+```java
+import com.bvilela.utils.GsonUtils;
+
+var json = GsonUtils.getGson().toJson(dto);
+// json = {"name":"nameValue"}
 ```
 
 [⬆ Voltar ao topo](#java-util-validation-lib)<br>
