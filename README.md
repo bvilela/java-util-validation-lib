@@ -82,4 +82,44 @@ Replace the `YOUR_AUTH_TOKEN` with a generated GitHub Personal Access Token (PAT
 
 :exclamation: Otherwise you will get a Not authorized exception.
 
+## How to Use
+
+### Case 1
+
+Validate if a variable of type `String` is a **Valid date**. 
+
+For this, use the **`@ValidParseDate`** annotation, with the `parse` parameter as `false` or **omit** this param (default is `false`).
+
+```java
+import com.bvilela.utils.annotation.javax.ValidParseDate;
+
+public class MyExampleDTO {
+	
+	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy")
+	private String dateInit;
+	
+}
+```
+
+### Case 2
+
+Validate if a variable of type `String` is a **Valid date and Convert** this value to a variable of type `LocalDate`.
+
+For this, use the **`@ValidParseDate`** annotation, with the `parse` parameter as `true`.
+
+In this case, you need to create a `LocalDate` variable with the same name of String variable, concatenating `Converted` in name.
+
+```java
+import com.bvilela.utils.annotation.javax.ValidParseDate;
+
+public class MyExampleDTO {
+	
+	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy", parse = true)
+	private String dateInit;
+	
+	private LocalDate dateInitConverted;
+	
+}
+```
+
 [⬆ Voltar ao topo](#java-util-validation-lib)<br>
