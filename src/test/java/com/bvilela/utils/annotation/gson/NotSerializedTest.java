@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-class TestNotSerialized {
+class NotSerializedTest {
 
 	@Getter
 	@Setter
@@ -24,7 +24,7 @@ class TestNotSerialized {
 	}
 	
 	@Test
-	void testJsonFieldNotSerialized() {
+	void shouldJsonFieldNotSerialized() {
 		var dto = new myDTO1();
 		dto.setName("nameValue");
 		dto.setNickName("nickNameValue");
@@ -46,7 +46,7 @@ class TestNotSerialized {
 	}
 	
 	@Test
-	void testJsonAllFieldsSerialized() {
+	void shouldJsonAllFieldsSerialized() {
 		var dto = new myDTO2();
 		dto.setName("nameValue");
 		dto.setNickName("nickNameValue");
