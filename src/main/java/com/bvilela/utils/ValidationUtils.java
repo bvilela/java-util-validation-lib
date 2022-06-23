@@ -34,7 +34,7 @@ public final class ValidationUtils {
 
 	public static <T> List<ConstraintViolation<Object>> validateParseDto(T dto) throws NoSuchMethodException,
 			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		List<ConstraintViolation<Object>> violations = validateDto(dto);
+		var violations = validateDto(dto);
 		if (violations.isEmpty()) {
 			parseDatesDto(dto);
 		}

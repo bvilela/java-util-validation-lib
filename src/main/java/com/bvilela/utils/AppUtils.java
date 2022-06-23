@@ -28,7 +28,7 @@ public final class AppUtils {
 			throw new IllegalArgumentException("Param 'locale' must not be Blank.");
 		}
 	
-		String[] splitted = locale.split("_");
+		var splitted = locale.split("_");
 		String language = splitted[0];
 		String country = "";
 		
