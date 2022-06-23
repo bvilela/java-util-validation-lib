@@ -37,7 +37,7 @@ public class ValidParseDateImpl implements ConstraintValidator<ValidParseDate, O
 				throw new IllegalArgumentException("'@ValidParseDate' can use only in String field.");
 			}
 
-			var text = (String) value;
+			String text = (String) value;
 			if (text.isBlank()) {
 				overriteMessage(context);
 				return !this.isRequired;
