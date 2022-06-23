@@ -38,7 +38,7 @@ public class ValidParseDateImpl implements ConstraintValidator<ValidParseDate, O
 			}
 
 			String text = (String) value;
-			if (AppUtils.isBlank(text)) {
+			if (text.isBlank()) {
 				overriteMessage(context);
 				return !this.isRequired;
 			}
