@@ -26,7 +26,7 @@ public final class ValidationUtils {
 				.validate(dto);
 
 		if (violations.isEmpty()) {
-			return Collections.emptyList();			
+			return Collections.emptyList();
 		}
 		
 		return violations.stream().map(e -> e).collect(Collectors.toList());
@@ -54,12 +54,16 @@ public final class ValidationUtils {
 				Method getMethod = dto.getClass().getMethod(getMethodName);
 
 				String value = (String) getMethod.invoke(dto);
-				Locale locale = AppUtils.getLocale(annotation.locale());
-				LocalDate valueConverted = AppUtils.parse(value, annotation.pattern(), locale);
+				
+				if (Objects.nonNull(value)) {
+					Locale locale = AppUtils.getLocale(annotation.locale());
+					LocalDate valueConverted = AppUtils.parse(value, annotation.pattern(), locale);
 
-				setMethodNameConverted = "set".concat(fieldName).concat("Converted");
-				Method setMethodConverted = dto.getClass().getMethod(setMethodNameConverted, LocalDate.class);
-				setMethodConverted.invoke(dto, valueConverted);
+					setMethodNameConverted = "set".concat(fieldName).concat("Converted");
+					Method setMethodConverted = dto.getClass().getMethod(setMethodNameConverted, LocalDate.class);
+					setMethodConverted.invoke(dto, valueConverted);
+				}
+
 			}
 		}
 	}

@@ -63,5 +63,7 @@ public @interface ValidParseDate {
 	String locale() default "pt_BR";
 
 	boolean parse() default false;
-
+	
+	boolean required() default true;
+	
 }
