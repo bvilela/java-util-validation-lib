@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolation;
@@ -312,7 +313,7 @@ class ValidDateTest {
 	@Test
 	void shouldParseDateInvalidTypeFieldList() throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		MyTestDTO10<List<String>> dto = new MyTestDTO10<List<String>>(List.of());
+		MyTestDTO10<List<String>> dto = new MyTestDTO10<List<String>>(new ArrayList<String>());
 		checkInvalidTypeField(dto);
 	}
 
