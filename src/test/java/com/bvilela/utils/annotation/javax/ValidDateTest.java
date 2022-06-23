@@ -31,17 +31,17 @@ class ValidDateTest {
 
 	@Test
 	void shouldSuccessCase1() {
-		assertNull(ValidationUtils.validateDto(new MyTestDTO1("01/01/2022")));
+		assertTrue(ValidationUtils.validateDto(new MyTestDTO1("01/01/2022")).isEmpty());
 	}
 
 	@Test
 	void shouldSuccessCase2() {
-		assertNull(ValidationUtils.validateDto(new MyTestDTO1("13/06/2022")));
+		assertTrue(ValidationUtils.validateDto(new MyTestDTO1("13/06/2022")).isEmpty());
 	}
 	
 	@Test
 	void shouldSuccessCase3() {
-		assertNull(ValidationUtils.validateDto(new MyTestDTO1("31/12/2022")));
+		assertTrue(ValidationUtils.validateDto(new MyTestDTO1("31/12/2022")).isEmpty());
 	}
 	
 	@Test
@@ -125,7 +125,7 @@ class ValidDateTest {
 	void shouldParseDateFalse() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "01/01/2022";
 		var dto = new MyTestDTO4(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertNull(dto.getDateConverted());
 	}
@@ -144,7 +144,7 @@ class ValidDateTest {
 	void shouldParseDateSuccess() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "02/01/2022";
 		var dto = new MyTestDTO5(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertEquals(LocalDate.of(2022, 1, 2), dto.getDateConverted());
 	}
@@ -190,7 +190,7 @@ class ValidDateTest {
 	void shouldParseDateSuccessMonthMMM() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "01 janeiro 2022";
 		var dto = new MyTestDTO7(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertEquals(LocalDate.of(2022, 1, 1), dto.getDateConverted());
 	}
@@ -209,7 +209,7 @@ class ValidDateTest {
 	void shouldParseDateSuccessMonthMMMEnglish1() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "01 January 2022";
 		var dto = new MyTestDTO8(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertEquals(LocalDate.of(2022, 1, 1), dto.getDateConverted());
 	}
@@ -218,7 +218,7 @@ class ValidDateTest {
 	void shouldParseDateSuccessMonthMMMEnglish2() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "01 february 2022";
 		var dto = new MyTestDTO8(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertEquals(LocalDate.of(2022, 2, 1), dto.getDateConverted());
 	}
@@ -237,7 +237,7 @@ class ValidDateTest {
 	void shouldParseDateSuccessGermany() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var myDate = "2022 15 Oktober";
 		var dto = new MyTestDTO9(myDate, null);
-		assertNull(ValidationUtils.validateParseDto(dto));
+		assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
 		assertEquals(myDate, dto.getDate());
 		assertEquals(LocalDate.of(2022, 10, 15), dto.getDateConverted());
 	}

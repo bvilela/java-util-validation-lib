@@ -25,11 +25,11 @@ public final class ValidationUtils {
 		Set<ConstraintViolation<Object>> violations = Validation.buildDefaultValidatorFactory().getValidator()
 				.validate(dto);
 
-		if (!violations.isEmpty()) {
-			return violations.stream().map(e -> e).collect(Collectors.toList());
+		if (violations.isEmpty()) {
+			return Collections.emptyList();			
 		}
-
-		return Collections.emptyList();
+		
+		return violations.stream().map(e -> e).collect(Collectors.toList());
 	}
 
 	public static <T> List<ConstraintViolation<Object>> validateParseDto(T dto) throws NoSuchMethodException,
@@ -41,7 +41,7 @@ public final class ValidationUtils {
 		return violations;
 	}
 
-	public static <T> void parseDatesDto(T dto) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+	private static <T> void parseDatesDto(T dto) throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 		String setMethodNameConverted = null;
 
