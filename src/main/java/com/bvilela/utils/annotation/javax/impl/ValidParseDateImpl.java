@@ -15,12 +15,14 @@ public class ValidParseDateImpl implements ConstraintValidator<ValidParseDate, O
 	private String pattern;
 	private Locale locale;
 	private boolean isRequired;
+	private String messageRequired;
 
 	@Override
 	public void initialize(ValidParseDate annotation) {
 		this.pattern = annotation.pattern();
 		this.locale = AppUtils.getLocale(annotation.locale());
 		this.isRequired = annotation.required();
+		this.messageRequired = annotation.messageRequired();
 	}
 
 	@Override
@@ -54,8 +56,7 @@ public class ValidParseDateImpl implements ConstraintValidator<ValidParseDate, O
 
 	private void overriteMessage(ConstraintValidatorContext context) {
 		context.disableDefaultConstraintViolation();
-		context.buildConstraintViolationWithTemplate(
-				"{bvilela.lib.util.validation.ValidParseDate.messageRequired}").addConstraintViolation();
+		context.buildConstraintViolationWithTemplate(this.messageRequired).addConstraintViolation();
 	}
 
 }

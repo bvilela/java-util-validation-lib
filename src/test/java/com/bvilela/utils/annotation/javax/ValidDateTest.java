@@ -60,6 +60,20 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
+	private class CustomRequiredMessageDTO {
+		@ValidParseDate(messageRequired = "My Custom Message for Required Field.")
+		private String date;
+	}
+
+	@Test
+	void shouldExceptionRequiredDateNullCustomRequiredMessage() {
+		List<ConstraintViolation<Object>> errors = ValidationUtils.validateDto(new CustomRequiredMessageDTO(null));
+		assertEquals(1, errors.size());
+		assertEquals("My Custom Message for Required Field.", errors.get(0).getMessage());
+		assertEquals("date", errors.get(0).getPropertyPath().toString());
+	}
+
+	@AllArgsConstructor
 	private class MyTestDTO1NoRequired {
 		@ValidParseDate(required = false)
 		private String date;
@@ -105,13 +119,13 @@ class ValidDateTest {
 
 	private void checkMessageInvalidDate(List<ConstraintViolation<Object>> errors) {
 		assertEquals(1, errors.size());
-		assertEquals("Value is a invalid date", errors.get(0).getMessage());
+		assertEquals("Value is a invalid date.", errors.get(0).getMessage());
 		assertEquals("date", errors.get(0).getPropertyPath().toString());
 	}
 
 	private void checkMessageRequiredDate(List<ConstraintViolation<Object>> errors) {
 		assertEquals(1, errors.size());
-		assertEquals("Field is required", errors.get(0).getMessage());
+		assertEquals("Field is required.", errors.get(0).getMessage());
 		assertEquals("date", errors.get(0).getPropertyPath().toString());
 	}
 

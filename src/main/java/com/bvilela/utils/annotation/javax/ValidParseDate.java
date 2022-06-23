@@ -65,5 +65,7 @@ public @interface ValidParseDate {
 	boolean parse() default false;
 	
 	boolean required() default true;
+
+	String messageRequired() default "{bvilela.lib.util.validation.ValidParseDate.messageRequired}";
 	
 }
