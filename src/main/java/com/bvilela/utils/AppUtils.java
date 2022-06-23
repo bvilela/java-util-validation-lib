@@ -6,10 +6,15 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class AppUtils {
 
 	private AppUtils() {
+	}
+	
+	public static boolean isBlank(String text) {
+		return Objects.isNull(text) || text.trim().isEmpty();
 	}
 
 	public static LocalDate parse(String date, String pattern, Locale locale) throws DateTimeParseException {
@@ -24,7 +29,7 @@ public final class AppUtils {
 	}
 
 	public static Locale getLocale(String locale) {
-		if (locale.isBlank()) {
+		if (isBlank(locale)) {
 			throw new IllegalArgumentException("Param 'locale' must not be Blank.");
 		}
 	
