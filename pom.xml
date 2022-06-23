@@ -7,7 +7,7 @@
 
 	<groupId>com.bvilela.lib</groupId>
 	<artifactId>java-util-validation</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>java-util-validation</name>
 
 	<properties>

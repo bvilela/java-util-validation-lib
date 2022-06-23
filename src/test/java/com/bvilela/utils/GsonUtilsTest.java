@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-class TestGsonUtils {
+class GsonUtilsTest {
 
 	@Test
-	void testGetGson() {
+	void shouldGetGson() {
 		assertNotNull(GsonUtils.getGson());
 	}
 	
