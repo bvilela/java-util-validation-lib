@@ -1,10 +1,10 @@
-package com.bvilela.utils.annotation.gson;
+package br.com.bvilela.lib.utils.annotation.gson;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.bvilela.utils.GsonUtils;
+import br.com.bvilela.lib.utils.GsonUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

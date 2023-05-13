@@ -7,16 +7,22 @@
 
 	<groupId>com.bvilela.lib</groupId>
 	<artifactId>java-util-validation</artifactId>
-	<version>0.0.3</version>
+	<version>1.0.0</version>
 	<name>java-util-validation</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
 		<sonar.organization>bvilela</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<java.version>11</java.version>
+		<encoding>UTF-8</encoding>
+		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+		<project.build.outputEncoding>${encoding}</project.build.outputEncoding>
+		<project.reporting.sourceEncoding>${encoding}</project.reporting.sourceEncoding>
+		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+		<maven.compile.encoding>${encoding}</maven.compile.encoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<pmd.plugin.version>3.13.0</pmd.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -76,6 +82,7 @@
 			<version>2.9.0</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -119,8 +126,65 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${pmd.plugin.version}</version>
+				<configuration>
+					<failOnViolation>true</failOnViolation>
+					<printFailingErrors>true</printFailingErrors>
+					<linkXRef>false</linkXRef>
+					<includeTests>true</includeTests>
+					<sourceEncoding>${encoding}</sourceEncoding>
+					<rulesets>
+						<ruleset>pmd-ruleset.xml</ruleset>
+					</rulesets>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.theoryinpractise</groupId>
+				<artifactId>googleformatter-maven-plugin</artifactId>
+				<version>1.7.5</version>
+				<executions>
+					<execution>
+						<id>reformat-sources</id>
+						<configuration>
+							<includeStale>false</includeStale>
+							<style>AOSP</style>
+							<formatMain>true</formatMain>
+							<formatTest>true</formatTest>
+							<filterModified>false</filterModified>
+							<skip>false</skip>
+							<fixImports>false</fixImports>
+							<maxLineLength>100</maxLineLength>
+						</configuration>
+						<goals>
+							<goal>format</goal>
+						</goals>
+						<phase>process-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${pmd.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<distributionManagement>
 		<repository>
 			<id>github</id>
@@ -128,4 +192,5 @@
 			<url>https://maven.pkg.github.com/bvilela/java-util-validation-lib</url>
 		</repository>
 	</distributionManagement>
+
 </project>

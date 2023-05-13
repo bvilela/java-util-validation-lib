@@ -1,4 +1,4 @@
-package com.bvilela.utils.annotation.javax.impl;
+package br.com.bvilela.lib.utils.annotation.javax.impl;
 
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
@@ -7,8 +7,8 @@ import java.util.Objects;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.bvilela.utils.AppUtils;
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import br.com.bvilela.lib.utils.AppUtils;
+import br.com.bvilela.lib.utils.annotation.javax.ValidParseDate;
 
 public class ValidParseDateImpl implements ConstraintValidator<ValidParseDate, Object> {
 

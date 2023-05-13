@@ -1,4 +1,4 @@
-package com.bvilela.utils;
+package br.com.bvilela.lib.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import br.com.bvilela.lib.utils.annotation.javax.ValidParseDate;
 
 public final class ValidationUtils {
 

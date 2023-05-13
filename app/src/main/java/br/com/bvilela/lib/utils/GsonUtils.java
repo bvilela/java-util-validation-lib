@@ -1,6 +1,6 @@
-package com.bvilela.utils;
+package br.com.bvilela.lib.utils;
 
-import com.bvilela.utils.annotation.gson.NotSerialized;
+import br.com.bvilela.lib.utils.annotation.gson.NotSerialized;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;

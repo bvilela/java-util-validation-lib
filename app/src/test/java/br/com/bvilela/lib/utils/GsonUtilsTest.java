@@ -1,4 +1,4 @@
-package com.bvilela.utils;
+package br.com.bvilela.lib.utils;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

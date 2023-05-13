@@ -1,4 +1,4 @@
-package com.bvilela.utils.annotation.javax;
+package br.com.bvilela.lib.utils.annotation.javax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -15,7 +15,7 @@ import javax.validation.ValidationException;
 
 import org.junit.jupiter.api.Test;
 
-import com.bvilela.utils.ValidationUtils;
+import br.com.bvilela.lib.utils.ValidationUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import lombok.Setter;
 class ValidDateTest {
 
 	@AllArgsConstructor
-	private class MyTestDTO1 {
+	private static class MyTestDTO1 {
 		@ValidParseDate
 		private String date;
 	}
@@ -60,7 +60,7 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
-	private class CustomRequiredMessageDTO {
+	private static class CustomRequiredMessageDTO {
 		@ValidParseDate(messageRequired = "My Custom Message for Required Field.")
 		private String date;
 	}
@@ -74,7 +74,7 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
-	private class MyTestDTO1NoRequired {
+	private static class MyTestDTO1NoRequired {
 		@ValidParseDate(required = false)
 		private String date;
 	}
@@ -130,7 +130,7 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
-	private class MyTestDTO2 {
+	private static class MyTestDTO2 {
 		@ValidParseDate(locale = "")
 		private String date;
 	}
@@ -141,7 +141,7 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
-	private class MyTestDTO3 {
+	private static class MyTestDTO3 {
 		@ValidParseDate(locale = " ")
 		private String date;
 	}
@@ -153,7 +153,7 @@ class ValidDateTest {
 
 	private <T> void baseExceptionLocale(T dto) {
 		var ex = assertThrows(ValidationException.class, () -> ValidationUtils.validateParseDto(dto));
-		assertEquals("HV000032: Unable to initialize com.bvilela.utils.annotation.javax.impl.ValidParseDateImpl.",
+		assertEquals("HV000032: Unable to initialize br.com.bvilela.lib.utils.annotation.javax.impl.ValidParseDateImpl.",
 				ex.getMessage());
 		assertEquals(IllegalArgumentException.class, ex.getCause().getClass());
 		assertEquals("Param 'locale' must not be Blank.", ex.getCause().getMessage());
@@ -161,7 +161,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO4 {
+	public static class MyTestDTO4 {
 		@ValidParseDate
 		private String date;
 		private LocalDate dateConverted;
@@ -179,7 +179,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO5 {
+	public static class MyTestDTO5 {
 		@ValidParseDate(parse = true)
 		private String date;
 
@@ -209,7 +209,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO6 {
+	public static class MyTestDTO6 {
 		@ValidParseDate(parse = true)
 		private String date;
 		private LocalDate dateConverted;
@@ -228,7 +228,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO7 {
+	public static class MyTestDTO7 {
 		@ValidParseDate(parse = true, pattern = "dd MMMM yyyy")
 		private String date;
 
@@ -248,7 +248,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO8 {
+	public static class MyTestDTO8 {
 		@ValidParseDate(parse = true, pattern = "dd MMMM yyyy", locale = "en")
 		private String date;
 
@@ -278,7 +278,7 @@ class ValidDateTest {
 
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO9 {
+	public static class MyTestDTO9 {
 		@ValidParseDate(parse = true, pattern = "yyyy dd MMMM", locale = "de_DE")
 		private String date;
 
@@ -297,7 +297,7 @@ class ValidDateTest {
 	}
 
 	@AllArgsConstructor
-	private class MyTestDTO10<T> {
+	private static class MyTestDTO10<T> {
 		@ValidParseDate
 		private T date;
 	}
@@ -346,7 +346,7 @@ class ValidDateTest {
 	
 	@Getter
 	@AllArgsConstructor
-	public class MyTestDTO11 {
+	public static class MyTestDTO11 {
 		@ValidParseDate(required = false, parse = true)
 		private String date;
 		private LocalDate dateConverted;
