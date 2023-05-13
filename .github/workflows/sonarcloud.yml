@@ -23,7 +23,7 @@ jobs:
           java-version: 11
 
       - name: Run Unit Test
-        run: mvn test --file pom.xml
+        run: mvn test --file app/pom.xml
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
