@@ -152,14 +152,14 @@ class ValidDateTest {
     }
 
     private <T> void baseExceptionLocale(T dto) {
-        var ex =
+        var exception =
                 assertThrows(
                         ValidationException.class, () -> ValidationUtils.validateParseDto(dto));
         assertEquals(
                 "HV000032: Unable to initialize br.com.bvilela.lib.utils.annotation.javax.impl.ValidParseDateImpl.",
-                ex.getMessage());
-        assertEquals(IllegalArgumentException.class, ex.getCause().getClass());
-        assertEquals("Param 'locale' must not be Blank.", ex.getCause().getMessage());
+                exception.getMessage());
+        assertEquals(IllegalArgumentException.class, exception.getCause().getClass());
+        assertEquals("Param 'locale' must not be Blank.", exception.getCause().getMessage());
     }
 
     @Getter
@@ -226,10 +226,10 @@ class ValidDateTest {
                     IllegalArgumentException, InvocationTargetException {
         var myDate = "03/01/2022";
         var dto = new MyTestDTO6(myDate, null);
-        var ex =
+        var exception =
                 assertThrows(
                         NoSuchMethodException.class, () -> ValidationUtils.validateParseDto(dto));
-        assertTrue(ex.getMessage().contains("setDateConverted(java.time.LocalDate"));
+        assertTrue(exception.getMessage().contains("setDateConverted(java.time.LocalDate"));
         assertEquals(myDate, dto.getDate());
         assertNull(dto.getDateConverted());
     }
@@ -378,12 +378,12 @@ class ValidDateTest {
     }
 
     private <T> void checkInvalidTypeField(T dto) {
-        var ex =
+        var exception =
                 assertThrows(
                         ValidationException.class, () -> ValidationUtils.validateParseDto(dto));
-        assertEquals("HV000028: Unexpected exception during isValid call.", ex.getMessage());
-        assertEquals(IllegalArgumentException.class, ex.getCause().getClass());
-        assertEquals("'@ValidParseDate' can use only in String field.", ex.getCause().getMessage());
+        assertEquals("HV000028: Unexpected exception during isValid call.", exception.getMessage());
+        assertEquals(IllegalArgumentException.class, exception.getCause().getClass());
+        assertEquals("'@ValidParseDate' can use only in String field.", exception.getCause().getMessage());
     }
 
     private <T> void checkValidateParseDtoNoViolations(T dto)

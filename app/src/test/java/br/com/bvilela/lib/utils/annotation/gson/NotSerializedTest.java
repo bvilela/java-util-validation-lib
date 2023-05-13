@@ -15,7 +15,7 @@ class NotSerializedTest {
     @Getter
     @Setter
     @NoArgsConstructor
-    private class myDTO1 {
+    private static class MyDTO1 {
         private String name;
         @NotSerialized private String nickName;
         @NotSerialized private int age;
@@ -23,7 +23,7 @@ class NotSerializedTest {
 
     @Test
     void shouldJsonFieldNotSerialized() {
-        var dto = new myDTO1();
+        var dto = new MyDTO1();
         dto.setName("nameValue");
         dto.setNickName("nickNameValue");
         dto.setAge(20);
@@ -37,14 +37,14 @@ class NotSerializedTest {
     @Getter
     @Setter
     @NoArgsConstructor
-    private class myDTO2 {
+    private static class MyDTO2 {
         private String name;
         private String nickName;
     }
 
     @Test
     void shouldJsonAllFieldsSerialized() {
-        var dto = new myDTO2();
+        var dto = new MyDTO2();
         dto.setName("nameValue");
         dto.setNickName("nickNameValue");
         var json = GsonUtils.getGson().toJson(dto);
