@@ -18,54 +18,54 @@ import br.com.bvilela.lib.utils.annotation.javax.ValidParseDate;
 
 public final class ValidationUtils {
 
-	private ValidationUtils() {
-	}
-	
-	public static <T> List<ConstraintViolation<Object>> validateDto(T dto) {
-		Set<ConstraintViolation<Object>> violations = Validation.buildDefaultValidatorFactory().getValidator()
-				.validate(dto);
+    private ValidationUtils() {}
 
-		if (violations.isEmpty()) {
-			return Collections.emptyList();
-		}
-		
-		return violations.stream().map(e -> e).collect(Collectors.toList());
-	}
+    public static <T> List<ConstraintViolation<Object>> validateDto(T dto) {
+        Set<ConstraintViolation<Object>> violations =
+                Validation.buildDefaultValidatorFactory().getValidator().validate(dto);
 
-	public static <T> List<ConstraintViolation<Object>> validateParseDto(T dto) throws NoSuchMethodException,
-			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		var violations = validateDto(dto);
-		if (violations.isEmpty()) {
-			parseDatesDto(dto);
-		}
-		return violations;
-	}
+        if (violations.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-	private static <T> void parseDatesDto(T dto) throws NoSuchMethodException, SecurityException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-		String setMethodNameConverted = null;
+        return violations.stream().map(e -> e).collect(Collectors.toList());
+    }
 
-		for (Field field : dto.getClass().getDeclaredFields()) {
-			ValidParseDate annotation = field.getDeclaredAnnotation(ValidParseDate.class);
+    public static <T> List<ConstraintViolation<Object>> validateParseDto(T dto)
+            throws NoSuchMethodException, SecurityException, IllegalAccessException,
+                    IllegalArgumentException, InvocationTargetException {
+        var violations = validateDto(dto);
+        if (violations.isEmpty()) {
+            parseDatesDto(dto);
+        }
+        return violations;
+    }
 
-			if (Objects.nonNull(annotation) && annotation.parse()) {
-				String fieldName = AppUtils.capitalize(field.getName());
-				String getMethodName = "get".concat(fieldName);
-				Method getMethod = dto.getClass().getMethod(getMethodName);
+    private static <T> void parseDatesDto(T dto)
+            throws NoSuchMethodException, SecurityException, IllegalAccessException,
+                    IllegalArgumentException, InvocationTargetException {
+        String setMethodNameConverted = null;
 
-				String value = (String) getMethod.invoke(dto);
-				
-				if (Objects.nonNull(value)) {
-					Locale locale = AppUtils.getLocale(annotation.locale());
-					LocalDate valueConverted = AppUtils.parse(value, annotation.pattern(), locale);
+        for (Field field : dto.getClass().getDeclaredFields()) {
+            ValidParseDate annotation = field.getDeclaredAnnotation(ValidParseDate.class);
 
-					setMethodNameConverted = "set".concat(fieldName).concat("Converted");
-					Method setMethodConverted = dto.getClass().getMethod(setMethodNameConverted, LocalDate.class);
-					setMethodConverted.invoke(dto, valueConverted);
-				}
+            if (Objects.nonNull(annotation) && annotation.parse()) {
+                String fieldName = AppUtils.capitalize(field.getName());
+                String getMethodName = "get".concat(fieldName);
+                Method getMethod = dto.getClass().getMethod(getMethodName);
 
-			}
-		}
-	}
-	
+                String value = (String) getMethod.invoke(dto);
+
+                if (Objects.nonNull(value)) {
+                    Locale locale = AppUtils.getLocale(annotation.locale());
+                    LocalDate valueConverted = AppUtils.parse(value, annotation.pattern(), locale);
+
+                    setMethodNameConverted = "set".concat(fieldName).concat("Converted");
+                    Method setMethodConverted =
+                            dto.getClass().getMethod(setMethodNameConverted, LocalDate.class);
+                    setMethodConverted.invoke(dto, valueConverted);
+                }
+            }
+        }
+    }
 }

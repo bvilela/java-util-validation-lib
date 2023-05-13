@@ -13,59 +13,47 @@ import javax.validation.Payload;
 import br.com.bvilela.lib.utils.annotation.javax.impl.ValidParseDateImpl;
 
 /**
- * The annotated element must be {@code String} and must contain a valid date
- * according to pattern and locale.
+ * The annotated element must be {@code String} and must contain a valid date according to pattern
+ * and locale.
  *
- * @param pattern - Pattern to valid/parse String Date. Default "dd/MM/yyyy".
- *                For more details, see
- *                {@link java.time.format.DateTimeFormatterBuilder#appendPattern(String)}
- *
- *                <p>
- * @param locale  - Locale of Date input. Default "pt_BR". For more details, see
- *                {@link java.util.Locale}
- *
- *                <p>
- * @param parse   - Indicates whether the field will be converted to LocalDate.
- *                Default: Boolean.False
- *                <p>
- *                A field with the same name is required, with "Converted" at
- *                the end of the name. Example:
- *
- *                <pre>
- * {@code
+ * @param pattern - Pattern to valid/parse String Date. Default "dd/MM/yyyy". For more details, see
+ *     {@link java.time.format.DateTimeFormatterBuilder#appendPattern(String)}
+ *     <p>
+ * @param locale - Locale of Date input. Default "pt_BR". For more details, see {@link
+ *     java.util.Locale}
+ *     <p>
+ * @param parse - Indicates whether the field will be converted to LocalDate. Default: Boolean.False
+ *     <p>A field with the same name is required, with "Converted" at the end of the name. Example:
+ *     <pre>{@code
  * ValidParseDate(parse = true)
  * private String myDate;
  * private LocalDate myDateConverted;
- * }
- * </pre>
+ * }</pre>
  *
  * @author Bruno Vilela
  * @since 0.0.1
- *
  */
-
-@Target({ FIELD })
+@Target({FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = ValidParseDateImpl.class)
 @Documented
-public @interface  ValidParseDate {
+public @interface ValidParseDate {
 
-	String message() default "{bvilela.lib.util.validation.ValidParseDate.message}";
+    String message() default "{bvilela.lib.util.validation.ValidParseDate.message}";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-	String value() default "";
+    String value() default "";
 
-	String pattern() default "dd/MM/yyyy";
+    String pattern() default "dd/MM/yyyy";
 
-	String locale() default "pt_BR";
+    String locale() default "pt_BR";
 
-	boolean parse() default false;
-	
-	boolean required() default true;
+    boolean parse() default false;
 
-	String messageRequired() default "{bvilela.lib.util.validation.ValidParseDate.messageRequired}";
-	
+    boolean required() default true;
+
+    String messageRequired() default "{bvilela.lib.util.validation.ValidParseDate.messageRequired}";
 }
