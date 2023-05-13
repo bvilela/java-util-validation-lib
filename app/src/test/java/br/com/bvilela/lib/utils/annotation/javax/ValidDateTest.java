@@ -1,71 +1,61 @@
 package br.com.bvilela.lib.utils.annotation.javax;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import br.com.bvilela.lib.utils.ValidationUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
-
-import org.junit.jupiter.api.Test;
-
-import br.com.bvilela.lib.utils.ValidationUtils;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ValidDateTest {
 
     @AllArgsConstructor
     private static class MyTestDTO1 {
-        @ValidParseDate private String date;
-    }
-
-    @Test
-    void shouldSuccessCase1() {
-        checkValidateDtoNoViolations(new MyTestDTO1("01/01/2022"));
-    }
-
-    @Test
-    void shouldSuccessCase2() {
-        checkValidateDtoNoViolations(new MyTestDTO1("13/06/2022"));
-    }
-
-    @Test
-    void shouldSuccessCase3() {
-        checkValidateDtoNoViolations(new MyTestDTO1("31/12/2022"));
-    }
-
-    @Test
-    void shouldExceptionRequiredDateNull() {
-        baseRequiredException(new MyTestDTO1(null));
-    }
-
-    @Test
-    void shouldExceptionRequiredDateEmpty() {
-        baseRequiredException(new MyTestDTO1(""));
-    }
-
-    @Test
-    void shouldExceptionRequiredDateBlank() {
-        baseRequiredException(new MyTestDTO1(" "));
-    }
-
-    @AllArgsConstructor
-    private static class CustomRequiredMessageDTO {
-        @ValidParseDate(messageRequired = "My Custom Message for Required Field.")
+        @ValidParseDate
         private String date;
+    }
+
+    @DisplayName("DTO Valid - Required Date")
+    @ParameterizedTest(name = "Date is \"{0}\"")
+    @ValueSource(strings = {"01/01/2022", "13/06/2022", "31/12/2022"})
+    void shouldValidDto(String date) {
+        var dto = new MyTestDTO1(date);
+        assertTrue(ValidationUtils.validateDto(dto).isEmpty());
+    }
+
+    @DisplayName("DTO Invalid - Required Date Exception")
+    @ParameterizedTest(name = "Date is \"{0}\"")
+    @NullAndEmptySource
+    @ValueSource(strings = {" "})
+    void shouldInvalidDtoRequiredDate(String date) {
+        var dto = new MyTestDTO1(date);
+        var errors = ValidationUtils.validateDto(dto);
+        assertEquals(1, errors.size());
+        assertEquals("Field is required.", errors.get(0).getMessage());
+        assertEquals("date", errors.get(0).getPropertyPath().toString());
     }
 
     @Test
     void shouldExceptionRequiredDateNullCustomRequiredMessage() {
+        @AllArgsConstructor
+        class CustomRequiredMessageDTO {
+            @ValidParseDate(messageRequired = "My Custom Message for Required Field.")
+            private String date;
+        }
+
         List<ConstraintViolation<Object>> errors =
                 ValidationUtils.validateDto(new CustomRequiredMessageDTO(null));
         assertEquals(1, errors.size());
@@ -79,53 +69,26 @@ class ValidDateTest {
         private String date;
     }
 
-    @Test
-    void shouldNoExceptionNoRequiredDateNull() {
-        checkValidateDtoNoViolations(new MyTestDTO1NoRequired(null));
+    @DisplayName("DTO Valid - Not Required Date")
+    @ParameterizedTest(name = "Date is \"{0}\"")
+    @NullAndEmptySource
+    @ValueSource(strings = {" "})
+    void shouldValidDtoNotRequiredDate(String date) {
+        var dto = new MyTestDTO1NoRequired(date);
+        assertTrue(ValidationUtils.validateDto(dto).isEmpty());
     }
 
-    @Test
-    void shouldNoExceptionNoRequiredDateEmpty() {
-        checkValidateDtoNoViolations(new MyTestDTO1NoRequired(""));
-    }
-
-    @Test
-    void shouldNoExceptionNoRequiredDateBlank() {
-        checkValidateDtoNoViolations(new MyTestDTO1NoRequired(" "));
-    }
-
-    @Test
-    void shouldExceptionDateInvalidCase1() {
-        baseException(new MyTestDTO1("abc"));
-    }
-
-    @Test
-    void shouldExceptionDateInvalidCase2() {
-        baseException(new MyTestDTO1("31-02-2022"));
-    }
-
-    @Test
-    void shouldExceptionDateInvalidCase3() {
-        baseException(new MyTestDTO1("01-01-2022"));
-    }
-
-    private <T> void baseException(T dto) {
+    @DisplayName("DTO Invalid - Date Format Invalid Exception")
+    @ParameterizedTest(name = "Date is \"{0}\"")
+    @ValueSource(strings = {"abc", "31-02-2022", "01-01-2022"})
+    void shouldExceptionDateInvalid(String date) {
+        var dto = new MyTestDTO1(date);
         checkMessageInvalidDate(ValidationUtils.validateDto(dto));
-    }
-
-    private <T> void baseRequiredException(T dto) {
-        checkMessageRequiredDate(ValidationUtils.validateDto(dto));
     }
 
     private void checkMessageInvalidDate(List<ConstraintViolation<Object>> errors) {
         assertEquals(1, errors.size());
         assertEquals("Value is a invalid date.", errors.get(0).getMessage());
-        assertEquals("date", errors.get(0).getPropertyPath().toString());
-    }
-
-    private void checkMessageRequiredDate(List<ConstraintViolation<Object>> errors) {
-        assertEquals(1, errors.size());
-        assertEquals("Field is required.", errors.get(0).getMessage());
         assertEquals("date", errors.get(0).getPropertyPath().toString());
     }
 
@@ -170,9 +133,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateFalse()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateFalse() {
         var myDate = "01/01/2022";
         var dto = new MyTestDTO4(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -190,9 +152,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateSuccess()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateSuccess() {
         var myDate = "02/01/2022";
         var dto = new MyTestDTO5(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -201,9 +162,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateInvalidDate()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidDate() {
         var myDate = "02-01-2022";
         var dto = new MyTestDTO5(myDate, null);
         checkMessageInvalidDate(ValidationUtils.validateParseDto(dto));
@@ -221,9 +181,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateExceptionMethodNotFound()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateExceptionMethodNotFound() {
         var myDate = "03/01/2022";
         var dto = new MyTestDTO6(myDate, null);
         var exception =
@@ -244,9 +203,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateSuccessMonthMMM()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateSuccessMonthMMM() {
         var myDate = "01 janeiro 2022";
         var dto = new MyTestDTO7(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -264,9 +222,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateSuccessMonthMMMEnglish1()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateSuccessMonthMMMEnglish1() {
         var myDate = "01 January 2022";
         var dto = new MyTestDTO8(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -275,9 +232,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateSuccessMonthMMMEnglish2()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateSuccessMonthMMMEnglish2() {
         var myDate = "01 february 2022";
         var dto = new MyTestDTO8(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -295,9 +251,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateSuccessGermany()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateSuccessGermany() {
         var myDate = "2022 15 Oktober";
         var dto = new MyTestDTO9(myDate, null);
         checkValidateParseDtoNoViolations(dto);
@@ -311,49 +266,43 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldInteger()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldInteger() {
         var dto = new MyTestDTO10<Integer>(123);
         checkInvalidTypeField(dto);
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldLocalDate()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldLocalDate() {
         var dto = new MyTestDTO10<LocalDate>(LocalDate.now());
         checkInvalidTypeField(dto);
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldBigDecimal()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldBigDecimal() {
         var dto = new MyTestDTO10<BigDecimal>(BigDecimal.ONE);
         checkInvalidTypeField(dto);
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldList()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldList() {
         var dto = new MyTestDTO10<List<String>>(List.of());
         checkInvalidTypeField(dto);
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldFloat()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldFloat() {
         var dto = new MyTestDTO10<Float>(1.2f);
         checkInvalidTypeField(dto);
     }
 
     @Test
-    void shouldParseDateInvalidTypeFieldObject()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldParseDateInvalidTypeFieldObject() {
         var dto = new MyTestDTO10<Object>(new MyTestDTO1("test"));
         checkInvalidTypeField(dto);
     }
@@ -368,9 +317,8 @@ class ValidDateTest {
     }
 
     @Test
-    void shouldNullValue()
-            throws NoSuchMethodException, SecurityException, IllegalAccessException,
-                    IllegalArgumentException, InvocationTargetException {
+    @SneakyThrows
+    void shouldNullValue() {
         var dto = new MyTestDTO11(null, null);
         checkValidateParseDtoNoViolations(dto);
         assertNull(dto.getDate());
@@ -392,7 +340,4 @@ class ValidDateTest {
         assertTrue(ValidationUtils.validateParseDto(dto).isEmpty());
     }
 
-    private <T> void checkValidateDtoNoViolations(T dto) {
-        assertTrue(ValidationUtils.validateDto(dto).isEmpty());
-    }
 }
