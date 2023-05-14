@@ -118,7 +118,11 @@
     <rule ref="category/java/design.xml/SingularField"/>
     <rule ref="category/java/design.xml/SwitchDensity" />
     <rule ref="category/java/design.xml/TooManyFields"/>
-    <rule ref="category/java/design.xml/TooManyMethods"/>
+    <rule ref="category/java/design.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="20"/>
+        </properties>
+	</rule>
     <rule ref="category/java/design.xml/UselessOverridingMethod"/>
     <rule ref="category/java/design.xml/UseUtilityClass"/>
 
