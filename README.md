@@ -49,7 +49,14 @@ Project with validations utils for Java based in javax and Gson.
 
 > The annotated element will **not be serialized** to gson.toJson(dto).
 > 
-> :exclamation: You need to get the Gson() by the `com.bvilela.utils.GsonUtils.getGson()`.
+> :exclamation: You need to get the Gson() by the `br.com.bvilela.lib.utils.GsonUtils.getGson()`.
+
+
+## :heavy_check_mark: Check PMD rules locally
+To check PMD rules in your machine, run follow command in `app` dir:
+```
+mvn pmd:check
+```
 
 
 ## :gear: Add dependency in your project
@@ -111,7 +118,7 @@ Validate if a variable of type `String` is a **Valid date**.
 For this, use the **`@ValidParseDate`** annotation, with the `parse` parameter as `false` or **omit** this param (default is `false`).
 
 ```java
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import javax.annotation.br.com.bvilela.lib.utils.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy")
@@ -120,7 +127,7 @@ public class MyExampleDTO {
 ```
 
 ```java
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import javax.annotation.br.com.bvilela.lib.utils.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(parse = false, pattern = "dd MMMM yyyy", locale = "en")
@@ -129,7 +136,7 @@ public class MyExampleDTO {
 ```
 
 ```java
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import javax.annotation.br.com.bvilela.lib.utils.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(pattern = "yyyy dd MMMM", locale = "de_DE")
@@ -138,7 +145,7 @@ public class MyExampleDTO {
 ```
 
 ```java
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import javax.annotation.br.com.bvilela.lib.utils.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(pattern = "dd MMMM yyyy")
@@ -155,7 +162,7 @@ For this, use the **`@ValidParseDate`** annotation, with the `parse` parameter a
 In this case, you need to create a `LocalDate` variable with the same name of String variable, concatenating `Converted` in name.
 
 ```java
-import com.bvilela.utils.annotation.javax.ValidParseDate;
+import javax.annotation.br.com.bvilela.lib.utils.ValidParseDate;
 
 public class MyExampleDTO {
 	@ValidParseDate(message = "DateInit is a invalid date!", pattern = "dd-MM-yyyy", parse = true)
@@ -169,7 +176,7 @@ public class MyExampleDTO {
 Use @NotSerialized annotation.
 
 ```java
-import com.bvilela.utils.annotation.gson.NotSerialized;
+import gson.annotation.br.com.bvilela.lib.utils.NotSerialized;
 
 public class MyExampleDTO {
 	private String name;
@@ -183,7 +190,7 @@ public class MyExampleDTO {
 ```
 
 ```java
-import com.bvilela.utils.GsonUtils;
+import br.com.bvilela.lib.utils.GsonUtils;
 
 var json = GsonUtils.getGson().toJson(dto);
 // json = {"name":"nameValue"}

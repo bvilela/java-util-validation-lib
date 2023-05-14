@@ -1,0 +1,1 @@
+Descrever mudanças realizadas e/ou bugs corrigidos :)
